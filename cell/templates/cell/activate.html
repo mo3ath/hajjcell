@@ -1,0 +1,81 @@
+{% extends 'cell/base.html' %}
+
+{% block content %}
+    <h1>Activate SIM</h1>
+    {% if phone %}
+    <form method="get">
+    	<input type="text" name="phone" value={{phone}}>
+     	<button name='subget' type="submit" class="save btn btn-default">Get Balance</button>
+    </form>
+    {% endif %}
+    
+    <form method="POST" action="../activate/" >{% csrf_token %}
+    	<br>
+    	<p> Your Balance is <strong>{{balance}}</strong> SR</p>
+        <!--{{ aform.as_p }}-->
+        <input type="hidden" name="phone" value={{phone}}>
+        <input type="hidden" name="offerid" id="soffer">
+        <div class="btn-group">
+        <table class="table table-condensed">
+	    <thead>
+	      <tr>
+	        <th>STC</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	     
+        {% for offer in stc %}
+		<tr>
+		<td><button type="button" name=coffer value="{{offer.offerid}}" {% if offer.disabled %} disabled="true" {% endif %} onclick="selectoffer(this)" class="btn btn-primary" style="margin:2px;min-height:80px;white-space: normal;max-width: 150px"><strong>{{ offer.netwok}}</strong><br>{{ offer|escape }}<br>{{offer.price}} SR</button></td>
+		</tr>
+        {% endfor %}
+        </tbody>
+	    </table>
+	    <table class="table table-condensed">
+	    <thead>
+	      <tr>
+	        <th>Mobily</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	     
+        {% for offer in mobily %}
+		<tr>
+		<td><button type="button" name=coffer value="{{offer.offerid}}" {% if offer.disabled %} disabled="true" {% endif %} onclick="selectoffer(this)" class="btn btn-primary" style="margin:2px;min-height:80px;white-space: normal;max-width: 150px"><strong>{{ offer.netwok}}</strong><br>{{ offer|escape }}<br>{{offer.price}} SR</button></td>
+		</tr>
+        {% endfor %}
+        </tbody>
+	    </table>
+	    <table class="table table-condensed">
+	    <thead>
+	      <tr>
+	        <th>Zain</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	     
+        {% for offer in zain %}
+		<tr>
+		<td><button type="button" name=coffer value="{{offer.offerid}}" {% if offer.disabled %} disabled="true" {% endif %} onclick="selectoffer(this)" class="btn btn-primary" style="margin:2px;min-height:80px;white-space: normal;max-width: 150px"><strong>{{ offer.netwok}}</strong><br>{{ offer|escape }}<br>{{offer.price}} SR</button>
+
+		</td>
+		</tr>
+        {% endfor %}
+        </tbody>
+	    </table>
+
+    	</div>
+    	<br>
+    	{% if err %}
+    	<h3>Your SIM is already activated</h3>
+    	{% else %}
+    	<button name='subpost' type="submit" class="save btn btn-default">Activate</button>
+    	{% endif %}
+        
+    </form>
+    <script type="text/javascript">
+    	function selectoffer(object){
+    		document.getElementById('soffer').value=object.value
+    	}
+    </script>
+{% endblock %}

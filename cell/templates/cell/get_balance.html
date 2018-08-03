@@ -1,0 +1,13 @@
+{% extends 'cell/base.html' %}
+
+{% block content %}
+    <h1>Activate SIM</h1>
+    {% if error %}
+        <p style="color: red;">Please submit a valid phone.</p>
+    {% endif %}
+    <form method="GET" action="get_balance" >{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Get Balance</button>
+    </form>
+    
+{% endblock %}
